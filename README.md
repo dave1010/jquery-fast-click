@@ -6,16 +6,7 @@ Code based on <http://code.google.com/mobile/articles/fast_buttons.html>
  
 ## Usage
 
-$('button').fastClick(function() {alert('clicked!');});
+    $('button').fastClick(function() {
+      alert('clicked!');
+    });
 
-## License 
-
-License Under Creative Commons Attribution 3.0 License
-
-## Author 
-
-Dave Hulbert (dave1010)
-
-## Version 
-
-0.1 2011-03-07
