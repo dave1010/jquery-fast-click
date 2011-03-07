@@ -23,80 +23,73 @@ $.fn.fastClick = function(handler) {
 };
 
 $.FastButton = function(element, handler) {
-  this.element = element;
-  this.handler = handler;
+	var startX, startY;
+	
+	var reset = function() {
+		$(element).unbind('touchend');
+		$(document.body).unbind('touchmove');
+	};
 
-  $(element).bind({
-    touchstart: this.handleEvent,
-    click: this.handleEvent
-  });
+	var onClick = function(event) {
+		event.stopPropagation();
+		reset();
+		handler(event);
+	
+		if (event.type === 'touchend') {
+			$.clickbuster.preventGhostClick(startX, startY);
+		}
+	};
+	
+	var onTouchMove = function(event) {
+		if (Math.abs(event.touches[0].clientX - startX) > 10 ||
+			Math.abs(event.touches[0].clientY - startY) > 10) {
+			reset();
+		}
+	};
+	
+	var onTouchStart = function(event) {
+		event.stopPropagation();
+	
+		$(element).bind('touchend', onClick);
+		$(document.body).bind('touchmove', onTouchMove);
+	
+		startX = event.touches[0].clientX;
+		startY = event.touches[0].clientY;
+	};
+	
+	$(element).bind({
+		touchstart: onTouchStart,
+		click: onClick
+	});
 };
 
-$.FastButton.prototype.handleEvent = function(event) {
-  switch (event.type) {
-    case 'touchstart': this.onTouchStart(event); break;
-    case 'touchmove': this.onTouchMove(event); break;
-    case 'touchend': this.onClick(event); break;
-    case 'click': this.onClick(event); break;
-  }
+$.clickbuster = {
+	coordinates: [],
+
+	preventGhostClick: function(x, y) {
+		$.clickbuster.coordinates.push(x, y);
+		window.setTimeout($.clickbuster.pop, 2500);
+	},
+
+	pop: function() {
+		$.clickbuster.coordinates.splice(0, 2);
+	},
+
+	onClick: function(event) {
+		var x, y, i;
+		for (i = 0; i < $.clickbuster.coordinates.length; i += 2) {
+			x = $.clickbuster.coordinates[i];
+			y = $.clickbuster.coordinates[i + 1];
+			if (Math.abs(event.clientX - x) < 25 && Math.abs(event.clientY - y) < 25) {
+				event.stopPropagation();
+				event.preventDefault();
+			}
+		}
+	}
 };
 
-$.FastButton.prototype.onTouchStart = function(event) {
-  event.stopPropagation();
-
-  $(this.element).bind('touchend', this.onClick);
-  $(document.body).bind('touchmove', this.onTouchMove);
-
-  this.startX = event.touches[0].clientX;
-  this.startY = event.touches[0].clientY;
-};
-
-$.FastButton.prototype.onTouchMove = function(event) {
-  if (Math.abs(event.touches[0].clientX - this.startX) > 10 ||
-      Math.abs(event.touches[0].clientY - this.startY) > 10) {
-    this.reset();
-  }
-};
-
-$.FastButton.prototype.onClick = function(event) {
-  event.stopPropagation();
-  this.reset();
-  this.handler(event);
-
-  if (event.type === 'touchend') {
-    $.clickbuster.preventGhostClick(this.startX, this.startY);
-  }
-};
-
-$.FastButton.prototype.reset = function() {
-  this.element.removeEventListener('touchend', this, false);
-  document.body.removeEventListener('touchmove', this, false);
-};
-
-$.clickbuster = {};
-
-$.clickbuster.preventGhostClick = function(x, y) {
-  $.clickbuster.coordinates.push(x, y);
-  window.setTimeout($.clickbuster.pop, 2500);
-};
-
-$.clickbuster.pop = function() {
-  $.clickbuster.coordinates.splice(0, 2);
-};
-
-$.clickbuster.onClick = function(event) {
-  var x, y, i;
-  for (i = 0; i < $.clickbuster.coordinates.length; i += 2) {
-    x = $.clickbuster.coordinates[i];
-    y = $.clickbuster.coordinates[i + 1];
-    if (Math.abs(event.clientX - x) < 25 && Math.abs(event.clientY - y) < 25) {
-      event.stopPropagation();
-      event.preventDefault();
-    }
-  }
-};
-
-document.addEventListener('click', $.clickbuster.onClick, true);
-$.clickbuster.coordinates = [];
+$(function(){
+	document.addEventListener('click', $.clickbuster.onClick, true);
+});
 
 }(jQuery));
