@@ -2,6 +2,12 @@
 
 (function($) {
 
+$.fn.fastClick = function(handler) {
+	return $(this).each(function(){
+		$.FastButton($(this)[0], handler);
+	});
+};
+
 $.FastButton = function(element, handler) {
   this.element = element;
   this.handler = handler;
