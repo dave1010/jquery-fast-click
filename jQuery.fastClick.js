@@ -1,4 +1,16 @@
-// http://code.google.com/mobile/articles/fast_buttons.html
+/**
+ * jQuery.fastClick.js
+ * 
+ * Work around some mobile browser's 300ms delay on the click event.
+ * 
+ * Code based on <http://code.google.com/mobile/articles/fast_buttons.html>
+ * 
+ * @license Under Creative Commons Attribution 3.0 License
+ * @author Dave Hulbert (dave1010)
+ * @version 0.1 2011-03-07
+ */
+
+/*global document, window, jQuery */
 
 (function($) {
 
@@ -47,7 +59,7 @@ $.FastButton.prototype.onClick = function(event) {
   this.reset();
   this.handler(event);
 
-  if (event.type == 'touchend') {
+  if (event.type === 'touchend') {
     $.clickbuster.preventGhostClick(this.startX, this.startY);
   }
 };
@@ -56,6 +68,8 @@ $.FastButton.prototype.reset = function() {
   this.element.removeEventListener('touchend', this, false);
   document.body.removeEventListener('touchmove', this, false);
 };
+
+$.clickbuster = {};
 
 $.clickbuster.preventGhostClick = function(x, y) {
   $.clickbuster.coordinates.push(x, y);
@@ -67,9 +81,10 @@ $.clickbuster.pop = function() {
 };
 
 $.clickbuster.onClick = function(event) {
-  for (var i = 0; i < $.clickbuster.coordinates.length; i += 2) {
-    var x = $.clickbuster.coordinates[i];
-    var y = $.clickbuster.coordinates[i + 1];
+  var x, y, i;
+  for (i = 0; i < $.clickbuster.coordinates.length; i += 2) {
+    x = $.clickbuster.coordinates[i];
+    y = $.clickbuster.coordinates[i + 1];
     if (Math.abs(event.clientX - x) < 25 && Math.abs(event.clientY - y) < 25) {
       event.stopPropagation();
       event.preventDefault();
@@ -80,4 +95,4 @@ $.clickbuster.onClick = function(event) {
 document.addEventListener('click', $.clickbuster.onClick, true);
 $.clickbuster.coordinates = [];
 
-})(jQuery);
+}(jQuery));
