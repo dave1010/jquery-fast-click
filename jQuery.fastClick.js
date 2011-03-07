@@ -12,6 +12,8 @@
 
 /*global document, window, jQuery */
 
+// TODO: check for touch support
+
 (function($) {
 
 $.fn.fastClick = function(handler) {
@@ -24,8 +26,10 @@ $.FastButton = function(element, handler) {
   this.element = element;
   this.handler = handler;
 
-  element.addEventListener('touchstart', this, false);
-  element.addEventListener('click', this, false);
+  $(element).bind({
+    touchstart: this.handleEvent,
+    click: this.handleEvent
+  });
 };
 
 $.FastButton.prototype.handleEvent = function(event) {
@@ -40,8 +44,8 @@ $.FastButton.prototype.handleEvent = function(event) {
 $.FastButton.prototype.onTouchStart = function(event) {
   event.stopPropagation();
 
-  this.element.addEventListener('touchend', this, false);
-  document.body.addEventListener('touchmove', this, false);
+  $(this.element).bind('touchend', this.onClick);
+  $(document.body).bind('touchmove', this.onTouchMove);
 
   this.startX = event.touches[0].clientX;
   this.startY = event.touches[0].clientY;
