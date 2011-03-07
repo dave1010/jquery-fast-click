@@ -5,14 +5,15 @@
  * 
  * Code based on <http://code.google.com/mobile/articles/fast_buttons.html>
  * 
+ * @usage
+ * $('button').fastClick(function() {alert('clicked!');});
+ * 
  * @license Under Creative Commons Attribution 3.0 License
  * @author Dave Hulbert (dave1010)
  * @version 0.1 2011-03-07
  */
 
 /*global document, window, jQuery */
-
-// TODO: check for touch support
 
 (function($) {
 
