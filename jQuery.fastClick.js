@@ -51,7 +51,7 @@ $.FastButton = function(element, handler) {
 	var onTouchStart = function(event) {
 		event.stopPropagation();
 	
-		$(element).bind('touchend', onClick);
+		$(element).bind('touchend', onTouchStart);
 		$(document.body).bind('touchmove', onTouchMove);
 	
 		startX = event.touches[0].clientX;
