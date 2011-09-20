@@ -10,10 +10,10 @@
  * 
  * @license Under Creative Commons Attribution 3.0 License
  * @author Dave Hulbert (dave1010)
- * @version 0.1 2011-03-07
+ * @version 0.2 2011-09-20
  */
 
-/*global document, window, jQuery */
+/*global document, window, jQuery, Math */
 
 (function($) {
 
