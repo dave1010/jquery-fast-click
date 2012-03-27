@@ -1,13 +1,13 @@
 /**
  * jQuery.fastClick.js
- * 
- * Work around some mobile browser's 300ms delay on the click event.
- * 
+ *
+ * Work around the 300ms delay for the click event in some mobile browsers.
+ *
  * Code based on <http://code.google.com/mobile/articles/fast_buttons.html>
- * 
+ *
  * @usage
  * $('button').fastClick(function() {alert('clicked!');});
- * 
+ *
  * @license Under Creative Commons Attribution 3.0 License
  * @author Dave Hulbert (dave1010)
  * @version 0.2 2011-09-20
@@ -25,39 +25,39 @@ $.fn.fastClick = function(handler) {
 
 $.FastButton = function(element, handler) {
 	var startX, startY;
-	
+
 	var reset = function() {
 		$(element).unbind('touchend');
-		$(document.body).unbind('touchmove');
+		$(document.fastButton).unbind('touchmove');
 	};
 
 	var onClick = function(event) {
 		event.stopPropagation();
 		reset();
 		handler(event);
-	
+
 		if (event.type === 'touchend') {
 			$.clickbuster.preventGhostClick(startX, startY);
 		}
 	};
-	
+
 	var onTouchMove = function(event) {
-		if (Math.abs(event.touches[0].clientX - startX) > 10 ||
-			Math.abs(event.touches[0].clientY - startY) > 10) {
+		if (Math.abs(event.originalEvent.touches[0].clientX - startX) > 10 ||
+			Math.abs(event.originalEvent.touches[0].clientY - startY) > 10) {
 			reset();
 		}
 	};
-	
+
 	var onTouchStart = function(event) {
 		event.stopPropagation();
-	
-		$(element).bind('touchend', onTouchStart);
-		$(document.body).bind('touchmove', onTouchMove);
-	
-		startX = event.touches[0].clientX;
-		startY = event.touches[0].clientY;
+
+		$(element).bind('touchend', onClick);
+		$(document.fastButton).bind('touchmove', onTouchMove);
+
+		startX = event.originalEvent.touches[0].clientX;
+		startY = event.originalEvent.touches[0].clientY;
 	};
-	
+
 	$(element).bind({
 		touchstart: onTouchStart,
 		click: onClick
