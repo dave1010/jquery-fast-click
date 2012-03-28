@@ -34,7 +34,7 @@ $.FastButton = function(element, handler) {
 	var onClick = function(event) {
 		event.stopPropagation();
 		reset();
-		handler(event);
+		handler.call(this, event);
 
 		if (event.type === 'touchend') {
 			$.clickbuster.preventGhostClick(startX, startY);
