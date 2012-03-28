@@ -1,6 +1,6 @@
 # jQuery fastClick plugin
 
-Work around some mobile browser's 300ms delay on the click event.
+Work around the 300ms delay for the click event in some mobile browsers.
  
 Code based on <http://code.google.com/mobile/articles/fast_buttons.html>
  
