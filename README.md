@@ -12,4 +12,4 @@ Code based on <http://code.google.com/mobile/articles/fast_buttons.html> (which 
 
 ## Example
 
-    See <http://jsfiddle.net/p4BhA/4/> for a link that starts loading as soon as you tap on it.
+See <http://jsfiddle.net/p4BhA/4/> for a link that starts loading as soon as you tap on it.
