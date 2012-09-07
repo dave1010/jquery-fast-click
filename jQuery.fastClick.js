@@ -90,7 +90,12 @@ $.clickbuster = {
 };
 
 $(function(){
-	document.addEventListener('click', $.clickbuster.onClick, true);
+	if (document.addEventListener){
+		document.addEventListener('click', $.clickbuster.onClick, true);
+	} else if (document.attachEvent){
+		// for IE 7/8
+		document.attachEvent('onclick', $.clickbuster.onClick);
+	}
 });
 
 }(jQuery));
