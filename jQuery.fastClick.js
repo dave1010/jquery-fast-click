@@ -8,7 +8,7 @@
  * @usage
  * $('button').fastClick(function() {alert('clicked!');});
  *
- * @license Under Creative Commons Attribution 3.0 License
+ * @license MIT
  * @author Dave Hulbert (dave1010)
  * @version 1.0.0 2013-01-17
  */
