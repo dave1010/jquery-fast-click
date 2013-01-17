@@ -10,7 +10,7 @@
  *
  * @license Under Creative Commons Attribution 3.0 License
  * @author Dave Hulbert (dave1010)
- * @version 0.2 2011-09-20
+ * @version 1.0.0 2013-01-17
  */
 
 /*global document, window, jQuery, Math */
