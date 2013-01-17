@@ -1,0 +1,31 @@
+{
+  "name": "fastClick",
+  "title": "jQuery fastClick",
+  "description": "Work around some mobile browser's 300ms delay on the click event",
+  "keywords": [
+    "mobile",
+    "click",
+    "speed",
+    "performance"
+  ],
+  "version": "1.0.0",
+  "author": {
+    "name": "Dave Hulbert",
+    "email": "dave1010@gmail.com",
+    "url": "http://www.createopen.com"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/Boldewyn/jQuery.exdent/blob/master/LICENSE.MIT"
+    }
+  ],
+  "bugs": "https://github.com/dave1010/jquery-fast-click/issues",
+  "homepage": "http://dave1010.github.com/jquery-fast-click/",
+  "docs": "http://dave1010.github.com/jquery-fast-click/",
+  "download": "https://github.com/dave1010/jquery-fast-click",
+  "demo": "http://jsfiddle.net/p4BhA/4/",
+  "dependencies": {
+    "jquery": ">=1.5"
+  }
+}
